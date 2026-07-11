@@ -57,3 +57,21 @@ button:disabled{cursor:default}
 @media(min-width:1024px) and (orientation:landscape){
  .page{max-width:1240px}.hero{grid-template-columns:1fr 1fr}.rank-grid{max-width:950px;grid-template-columns:repeat(4,1fr)}
 }
+
+.sales-content{padding:30px}
+.sales-stepper{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.sales-stepper span{height:8px;border-radius:99px;background:#dbe6ef}
+.sales-stepper span.active{background:#1675e8}
+.sales-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:20px}
+.sales-customer-card,.sales-question-card{border:1px solid var(--line);border-radius:20px;padding:22px;background:#fff}
+.sales-avatar{font-size:78px;text-align:center;padding:22px;border-radius:18px;background:#eff7fc}
+.sales-facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.sales-facts div{padding:10px;border-radius:10px;background:#f5f9fb;font-size:13px}
+.sales-speech{margin-top:14px;padding:14px;border-radius:14px;background:#f3f8fb;font-weight:800;line-height:1.6}
+.mission-progress{margin-top:18px}
+@media(max-width:767px){
+ .sales-content{padding:20px 15px}
+ .sales-layout{grid-template-columns:1fr}
+ .sales-customer-card,.sales-question-card{padding:16px}
+ .sales-avatar{font-size:60px}
+}

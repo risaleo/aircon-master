@@ -4,12 +4,16 @@ const DATA=window.AIRCON_DATA;
 const state={category:"practice",rank:"初級",pool:[],index:0,score:0,current:null,answered:false};
 const STORE="aircon_v2_stats";
 
+const salesData=DATA.salesCases||[];
+let salesState={caseIndex:0,stepIndex:0,score:0};
 const pages={
  home:document.getElementById("homePage"),
  rank:document.getElementById("rankPage"),
  quiz:document.getElementById("quizPage"),
  result:document.getElementById("resultPage"),
- history:document.getElementById("historyPage")
+ history:document.getElementById("historyPage"),
+ sales:document.getElementById("salesPage"),
+ mission:document.getElementById("missionPage")
 };
 
 function showPage(name){
@@ -177,3 +181,111 @@ document.getElementById("historyButton").addEventListener("click",showHistory);
 updateHome();
 
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
+
+
+function todayMissionKey(){
+  return "aircon_v2_mission_"+new Date().toISOString().slice(0,10);
+}
+function getTodayMissionCount(){
+  return Number(localStorage.getItem(todayMissionKey())||0);
+}
+function addTodayMissionCount(){
+  localStorage.setItem(todayMissionKey(),String(getTodayMissionCount()+1));
+  updateMissionDisplay();
+}
+function updateMissionDisplay(){
+  const count=Math.min(getTodayMissionCount(),3);
+  document.getElementById("missionCount").textContent=count+" / 3";
+  const detail=document.getElementById("missionDetailCount");
+  const bar=document.getElementById("missionDetailBar");
+  if(detail)detail.textContent=count+" / 3";
+  if(bar)bar.style.width=(count/3*100)+"%";
+}
+function openMissionPage(){
+  updateMissionDisplay();
+  showPage("mission");
+}
+function startSalesMode(){
+  if(!salesData.length){
+    alert("販買モードのデータがありません。");
+    return;
+  }
+  salesState={caseIndex:Math.floor(Math.random()*salesData.length),stepIndex:0,score:0};
+  showPage("sales");
+  renderSalesMode();
+}
+function renderSalesMode(){
+  const item=salesData[salesState.caseIndex];
+  const step=item.steps[salesState.stepIndex];
+  document.getElementById("salesStepper").innerHTML=item.steps.map((_,i)=>'<span class="'+(i<=salesState.stepIndex?'active':'')+'"></span>').join("");
+  document.getElementById("salesCustomerCard").innerHTML=
+    '<div class="sales-avatar">'+item.avatar+'</div>'+
+    '<h2>'+item.title+'</h2>'+
+    '<div class="sales-facts"><div>👤 '+item.customer+'</div><div>🏠 '+item.home+'</div><div>📍 '+item.room+'</div><div>💰 '+item.budget+'</div></div>'+
+    '<div class="sales-speech">'+item.speech+'</div>';
+  document.getElementById("salesQuestion").textContent=step.q;
+  const box=document.getElementById("salesChoices");
+  box.innerHTML="";
+  document.getElementById("salesFeedback").classList.add("hidden");
+  const shuffled=shuffle(step.choices.map((text,index)=>({text,index})));
+  shuffled.forEach((choice,displayIndex)=>{
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="choice";
+    button.textContent=(displayIndex+1)+"　"+choice.text;
+    button.dataset.originalIndex=String(choice.index);
+    button.addEventListener("click",()=>answerSales(choice.index,button));
+    box.appendChild(button);
+  });
+}
+function answerSales(originalIndex,button){
+  const item=salesData[salesState.caseIndex];
+  const step=item.steps[salesState.stepIndex];
+  const buttons=[...document.querySelectorAll("#salesChoices .choice")];
+  buttons.forEach(b=>b.disabled=true);
+  const correct=originalIndex===step.answer;
+  button.classList.add(correct?"correct":"wrong");
+  if(correct)salesState.score++;
+  else{
+    const right=buttons.find(b=>Number(b.dataset.originalIndex)===step.answer);
+    if(right)right.classList.add("correct");
+  }
+  const feedback=document.getElementById("salesFeedback");
+  feedback.innerHTML="<b>"+(correct?"⭕ 正解":"❌ 不正解")+"</b><br>"+(correct?"良い確認です。":"正しい確認順を見直しましょう。");
+  feedback.classList.remove("hidden");
+  setTimeout(()=>{
+    salesState.stepIndex++;
+    if(salesState.stepIndex<item.steps.length)renderSalesMode();
+    else finishSalesMode();
+  },800);
+}
+function finishSalesMode(){
+  const item=salesData[salesState.caseIndex];
+  document.getElementById("salesQuestion").textContent="接客終了";
+  document.getElementById("salesChoices").innerHTML=
+    '<div class="result-card"><span>販売レポート</span><strong>'+salesState.score+' / '+item.steps.length+'</strong><p>'+item.title+'</p></div>'+
+    '<button class="next-button" type="button" id="nextCustomerButton">別のお客様</button>'+
+    '<button class="next-button" type="button" id="salesHomeButton">ホームへ戻る</button>';
+  document.getElementById("salesFeedback").classList.add("hidden");
+  addTodayMissionCount();
+  const stats=loadStats();
+  stats.sessions.unshift({
+    date:new Date().toLocaleString("ja-JP"),
+    category:"販買モード",
+    rank:item.title,
+    score:salesState.score,
+    total:item.steps.length
+  });
+  stats.sessions=stats.sessions.slice(0,50);
+  saveStats(stats);
+  document.getElementById("nextCustomerButton").addEventListener("click",startSalesMode);
+  document.getElementById("salesHomeButton").addEventListener("click",()=>showPage("home"));
+}
+
+
+document.getElementById("salesModeButton").addEventListener("click",startSalesMode);
+document.getElementById("missionButton").addEventListener("click",openMissionPage);
+document.getElementById("missionStartButton").addEventListener("click",startSalesMode);
+document.getElementById("salesBack").addEventListener("click",()=>showPage("home"));
+document.getElementById("salesQuit").addEventListener("click",()=>showPage("home"));
+updateMissionDisplay();
