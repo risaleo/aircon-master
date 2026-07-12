@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+<rect width="1400" height="900" fill="#f4f9fc"/>
+<rect x="30" y="30" width="1340" height="840" rx="34" fill="#fff" stroke="#b9d8e9" stroke-width="4"/>
+<text x="700" y="95" text-anchor="middle" font-size="48" font-family="sans-serif" font-weight="700" fill="#0b315f">ダイキン R・A・F・E 比較</text>
+<text x="700" y="140" text-anchor="middle" font-size="25" font-family="sans-serif" fill="#5e7181">機能の多さではなく「使い方・希望・予算」で提案する</text>
+
+<!-- R -->
+<g transform="translate(70,190)">
+ <rect width="300" height="540" rx="28" fill="#edf6ff" stroke="#4c9bd1" stroke-width="5"/>
+ <circle cx="150" cy="75" r="50" fill="#176fd0"/>
+ <text x="150" y="92" text-anchor="middle" font-size="50" font-family="sans-serif" font-weight="700" fill="#fff">R</text>
+ <text x="150" y="160" text-anchor="middle" font-size="30" font-family="sans-serif" font-weight="700" fill="#0b315f">最上位・全部入り</text>
+ <text x="30" y="220" font-size="25" font-family="sans-serif" fill="#223">おすすめ</text>
+ <text x="40" y="265" font-size="24" font-family="sans-serif" fill="#223">・長時間使うリビング</text>
+ <text x="40" y="305" font-size="24" font-family="sans-serif" fill="#223">・加湿も含め快適性重視</text>
+ <text x="40" y="345" font-size="24" font-family="sans-serif" fill="#223">・電気代と快適さを両立</text>
+ <rect x="25" y="390" width="250" height="95" rx="18" fill="#dceeff"/>
+ <text x="150" y="428" text-anchor="middle" font-size="22" font-family="sans-serif" fill="#0b315f">提案の一言</text>
+ <text x="150" y="460" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">「毎日長く使うなら、</text>
+ <text x="150" y="486" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">快適性まで比較しましょう」</text>
+</g>
+
+<!-- A -->
+<g transform="translate(395,190)">
+ <rect width="300" height="540" rx="28" fill="#eef9f2" stroke="#58a879" stroke-width="5"/>
+ <circle cx="150" cy="75" r="50" fill="#3a9962"/>
+ <text x="150" y="92" text-anchor="middle" font-size="50" font-family="sans-serif" font-weight="700" fill="#fff">A</text>
+ <text x="150" y="160" text-anchor="middle" font-size="30" font-family="sans-serif" font-weight="700" fill="#0b315f">高機能・加湿なし</text>
+ <text x="30" y="220" font-size="25" font-family="sans-serif" fill="#223">おすすめ</text>
+ <text x="40" y="265" font-size="24" font-family="sans-serif" fill="#223">・リビングで快適性重視</text>
+ <text x="40" y="305" font-size="24" font-family="sans-serif" fill="#223">・加湿機能は不要</text>
+ <text x="40" y="345" font-size="24" font-family="sans-serif" fill="#223">・Rより価格を抑えたい</text>
+ <rect x="25" y="390" width="250" height="95" rx="18" fill="#dcf2e4"/>
+ <text x="150" y="428" text-anchor="middle" font-size="22" font-family="sans-serif" fill="#0b315f">提案の一言</text>
+ <text x="150" y="460" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">「加湿は不要でも、</text>
+ <text x="150" y="486" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">快適性は妥協しない方へ」</text>
+</g>
+
+<!-- F -->
+<g transform="translate(720,190)">
+ <rect width="300" height="540" rx="28" fill="#fff8e9" stroke="#d9a649" stroke-width="5"/>
+ <circle cx="150" cy="75" r="50" fill="#d59a31"/>
+ <text x="150" y="92" text-anchor="middle" font-size="50" font-family="sans-serif" font-weight="700" fill="#fff">F</text>
+ <text x="150" y="160" text-anchor="middle" font-size="30" font-family="sans-serif" font-weight="700" fill="#0b315f">機能と価格のバランス</text>
+ <text x="30" y="220" font-size="25" font-family="sans-serif" fill="#223">おすすめ</text>
+ <text x="40" y="265" font-size="24" font-family="sans-serif" fill="#223">・快適機能も欲しい</text>
+ <text x="40" y="305" font-size="24" font-family="sans-serif" fill="#223">・上位までは必要ない</text>
+ <text x="40" y="345" font-size="24" font-family="sans-serif" fill="#223">・価格とのバランス重視</text>
+ <rect x="25" y="390" width="250" height="95" rx="18" fill="#fff0cf"/>
+ <text x="150" y="428" text-anchor="middle" font-size="22" font-family="sans-serif" fill="#0b315f">提案の一言</text>
+ <text x="150" y="460" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">「必要な快適機能と</text>
+ <text x="150" y="486" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">価格のバランス型です」</text>
+</g>
+
+<!-- E -->
+<g transform="translate(1045,190)">
+ <rect width="300" height="540" rx="28" fill="#f7f2fb" stroke="#9770b8" stroke-width="5"/>
+ <circle cx="150" cy="75" r="50" fill="#8252a6"/>
+ <text x="150" y="92" text-anchor="middle" font-size="50" font-family="sans-serif" font-weight="700" fill="#fff">E</text>
+ <text x="150" y="160" text-anchor="middle" font-size="30" font-family="sans-serif" font-weight="700" fill="#0b315f">シンプル・価格重視</text>
+ <text x="30" y="220" font-size="25" font-family="sans-serif" fill="#223">おすすめ</text>
+ <text x="40" y="265" font-size="24" font-family="sans-serif" fill="#223">・寝室／子ども部屋</text>
+ <text x="40" y="305" font-size="24" font-family="sans-serif" fill="#223">・使用時間が短め</text>
+ <text x="40" y="345" font-size="24" font-family="sans-serif" fill="#223">・基本機能と価格を優先</text>
+ <rect x="25" y="390" width="250" height="95" rx="18" fill="#eee4f6"/>
+ <text x="150" y="428" text-anchor="middle" font-size="22" font-family="sans-serif" fill="#0b315f">提案の一言</text>
+ <text x="150" y="460" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">「シンプルに使う部屋なら、</text>
+ <text x="150" y="486" text-anchor="middle" font-size="20" font-family="sans-serif" fill="#0b315f">価格を抑えて選べます」</text>
+</g>
+
+<rect x="120" y="770" width="1160" height="60" rx="20" fill="#fff5d8" stroke="#e2b84e" stroke-width="3"/>
+<text x="700" y="808" text-anchor="middle" font-size="24" font-family="sans-serif" fill="#6e5300">最終提案は、部屋条件・使用時間・予算・該当型番の仕様を確認して決めます</text>
+</svg>
