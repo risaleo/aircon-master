@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850">
+<rect width="1200" height="850" fill="#f6fbff"/>
+<rect x="30" y="30" width="1140" height="790" rx="30" fill="#fff" stroke="#b9d9ec" stroke-width="4"/>
+<text x="600" y="95" text-anchor="middle" font-size="45" font-family="sans-serif" font-weight="700" fill="#0b315f">プレミアム冷房</text>
+<text x="600" y="140" text-anchor="middle" font-size="24" font-family="sans-serif" fill="#536d81">設定温度に達した後も、温度と湿度をコントロール</text>
+
+<rect x="90" y="190" width="1020" height="135" rx="24" fill="#eef7ff" stroke="#58a5db" stroke-width="3"/>
+<text x="600" y="235" text-anchor="middle" font-size="28" font-family="sans-serif" font-weight="700" fill="#1267a9">お客様にとってのメリット</text>
+<text x="600" y="285" text-anchor="middle" font-size="28" font-family="sans-serif" fill="#223">室温安定後も、蒸し暑さを感じにくい快適な冷房</text>
+
+<rect x="85" y="370" width="490" height="315" rx="28" fill="#edf7ff" stroke="#58a5db" stroke-width="4"/>
+<text x="330" y="430" text-anchor="middle" font-size="34" font-family="sans-serif" font-weight="700" fill="#1267a9">デシクル制御</text>
+<text x="330" y="480" text-anchor="middle" font-size="27" font-family="sans-serif" font-weight="700" fill="#0b315f">湿度のコントロール</text>
+<text x="125" y="535" font-size="24" font-family="sans-serif" fill="#223">・熱交換器の冷やす部分を</text>
+<text x="145" y="575" font-size="24" font-family="sans-serif" fill="#223">無段階に切り替える</text>
+<text x="125" y="625" font-size="24" font-family="sans-serif" fill="#223">・設定温度後も除湿を続ける</text>
+
+<rect x="625" y="370" width="490" height="315" rx="28" fill="#eef9f2" stroke="#65ad7d" stroke-width="4"/>
+<text x="870" y="430" text-anchor="middle" font-size="34" font-family="sans-serif" font-weight="700" fill="#2f8a55">PIT（ピット）制御</text>
+<text x="870" y="480" text-anchor="middle" font-size="27" font-family="sans-serif" font-weight="700" fill="#0b315f">温度のコントロール</text>
+<text x="665" y="535" font-size="24" font-family="sans-serif" fill="#223">・室温安定後も細かく調整</text>
+<text x="665" y="585" font-size="24" font-family="sans-serif" fill="#223">・0.5℃単位で室温制御</text>
+<text x="665" y="635" font-size="24" font-family="sans-serif" fill="#223">・冷えすぎや温度上昇を抑える</text>
+
+<rect x="125" y="725" width="950" height="62" rx="18" fill="#fff4d9" stroke="#dfbd5b" stroke-width="3"/>
+<text x="600" y="765" text-anchor="middle" font-size="22" font-family="sans-serif" fill="#684f00">搭載内容はシリーズ・型番で異なります。最新の機能表を確認してください。</text>
+</svg>

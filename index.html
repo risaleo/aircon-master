@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>エアコン販買マスター Pro 正式版 2.2.0</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2200">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2200">
+<title>エアコン販買マスター Pro Ver.3.1-A3 レビュー版</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3103">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3103">
 <style>
 :root{--navy:#0b315f;--blue:#116fe8;--text:#14324f;--muted:#718497;--line:#dbe6ef}
 *{box-sizing:border-box}
@@ -352,7 +352,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 @media(max-width:767px){.app{padding:0}.page{min-height:100vh;border-radius:0}.topbar,.subheader{height:72px;padding:0 15px}.brand{font-size:20px}.hero{margin:12px 14px;padding:20px;grid-template-columns:1fr}.hero-image{display:none}.main-banner{width:calc(100% - 28px);margin:0 14px 12px;padding:18px}.menu-grid{padding:0 14px;grid-template-columns:1fr 1fr;gap:9px}.menu-card{min-height:165px;padding:13px}.menu-card:last-child{grid-column:1/-1}.mission{width:calc(100% - 28px);margin:12px 14px}.rank-content,.quiz-content,.result-content,.history-content,.settings-content,.sales-content{padding:20px 15px}.rank-grid{gap:10px}.rank-button{min-height:135px;padding:15px}.choice-list,.sales-layout{grid-template-columns:1fr}.question-card{font-size:20px}.history-summary{grid-template-columns:1fr 1fr}}
 @media(min-width:768px) and (max-width:1366px){.app{max-width:none;width:100%;padding:20px}.page{max-width:1160px;margin:auto}.sales-layout{grid-template-columns:.75fr 1.25fr}}
 </style>
-<link rel="manifest" href="manifest.webmanifest?v=2200">
+<link rel="manifest" href="manifest.webmanifest?v=3103">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="エアコン販買マスター">
@@ -366,7 +366,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
     <div class="brand">
       <span class="brand-snow">❄</span>
       <span>エアコン販買マスター</span>
-      <small>正式版 2.2.0</small>
+      <small>Ver.3.1-A3 レビュー版</small>
     </div>
     <button class="icon-button status-button" onclick="openMission()" aria-label="今日の目標">◎</button>
   </header>
@@ -1192,30 +1192,31 @@ function finishDaikinQuiz(){
 const DAIKIN_FEATURES={
  premium:{
   title:"プレミアム冷房",
-  lead:"設定温度に到達した後も、温度と湿度をきめ細かくコントロールし、蒸し暑さを感じにくくする冷房です。",
+  lead:"💡 一言でいうと：設定温度に達した後も、温度だけでなく湿度も見ながら、蒸し暑さを感じにくくする冷房です。",
   html:`
+   <div class="diagram-box good">
+    <div class="diagram-title">お客様にとってのメリット</div>
+    <div class="diagram-flow">
+     <div class="flow-node">設定温度に到達</div><div class="flow-link">↓</div>
+     <div class="flow-node blue">デシクル制御で除湿を続ける</div><div class="flow-link">＋</div>
+     <div class="flow-node blue">PIT（ピット）制御で室温を細かく調整</div><div class="flow-link">↓</div>
+     <div class="flow-node green">室温安定後も蒸し暑さを感じにくい</div>
+    </div>
+   </div>
    <div class="diagram-compare">
     <div class="diagram-box">
-     <div class="diagram-title">一般的な冷房のイメージ</div>
-     <div class="diagram-flow">
-      <div class="flow-node">設定温度へ近づく</div><div class="flow-link">↓</div>
-      <div class="flow-node yellow">冷やす力が弱まる</div><div class="flow-link">↓</div>
-      <div class="flow-node">湿度が戻りやすい</div><div class="flow-link">↓</div>
-      <div class="flow-node">同じ温度でも蒸し暑く感じることがある</div>
-     </div>
+     <div class="diagram-title">デシクル制御とは？</div>
+     <p><b>湿度をコントロールする技術です。</b></p>
+     <p>設定温度に達した後も、熱交換器の冷やす部分を無段階に切り替えながら除湿を続けます。</p>
     </div>
-    <div class="diagram-arrow">→</div>
-    <div class="diagram-box good">
-     <div class="diagram-title">プレミアム冷房</div>
-     <div class="diagram-flow">
-      <div class="flow-node blue">デシクル制御で湿度を調整</div><div class="flow-link">＋</div>
-      <div class="flow-node blue">PIT制御で温度を細かく調整</div><div class="flow-link">↓</div>
-      <div class="flow-node green">設定温度後もサラッと快適</div>
-     </div>
+    <div class="diagram-box">
+     <div class="diagram-title">PIT（ピット）制御とは？</div>
+     <p><b>温度をきめ細かくコントロールする技術です。</b></p>
+     <p>室温が安定した後も、0.5℃単位で室温を調整し、冷えすぎや温度の上がりすぎを抑えます。</p>
     </div>
    </div>`,
-  talk:"「設定温度になった後も、温度だけでなく湿度まで見ながら運転するので、同じ温度でもサラッと感じやすい冷房です。」",
-  caution:"プレミアム冷房やPIT制御の搭載内容はシリーズ・型番で異なります。2026年モデルではR・Aなど上位シリーズを中心に、該当型番の機能表で確認してください。"
+  talk:"「設定温度になった後も除湿を続け、温度も細かく調整するので、同じ室温でも蒸し暑さを感じにくい冷房です。」",
+  caution:"プレミアム冷房や各制御の搭載内容はシリーズ・型番で異なります。最新の機能表を確認してください。『湿度を必ず一定に保つ』『冷えすぎない』とは断定しません。"
  },
  airflow:{
   title:"風ないス運転",
@@ -1290,18 +1291,34 @@ const DAIKIN_FEATURES={
  },
  dehumidify:{
   title:"さらら除湿",
-  lead:"温度を下げる除湿、寒くなりにくい除湿、必要に応じて温めて戻す除湿などを自動で切り替える考え方です。",
+  lead:"💡 一言でいうと：季節や室温・湿度に合わせて除湿量を細かく調整し、肌寒さを抑えながら湿気を取りやすくするダイキンの除湿機能です。",
   html:`
    <div class="diagram-box good">
-    <div class="diagram-title">ハイブリッド方式のイメージ</div>
+    <div class="diagram-title">さらら除湿の本質</div>
     <div class="diagram-flow">
-     <div class="flow-node">運転開始時：しっかり除湿</div><div class="flow-link">↓</div>
-     <div class="flow-node blue">室温が安定：寒くなりにくい除湿へ調整</div><div class="flow-link">↓</div>
-     <div class="flow-node green">状況に合わせて方式を自動切替</div>
+     <div class="flow-node">室温・湿度や季節を確認</div><div class="flow-link">↓</div>
+     <div class="flow-node blue">必要な除湿量に合わせて運転を調整</div><div class="flow-link">↓</div>
+     <div class="flow-node green">湿気を取りながら肌寒さを抑える</div>
     </div>
+   </div>
+   <div class="diagram-compare">
+    <div class="diagram-box">
+     <div class="diagram-title">R・Aシリーズ</div>
+     <p><b>リニアハイブリッド方式</b></p>
+     <p>状況に合わせて複数の除湿方式を切り替え、熱交換器をリニアに制御して、必要な除湿量へ細かく合わせます。</p>
+    </div>
+    <div class="diagram-box">
+     <div class="diagram-title">Fシリーズ</div>
+     <p><b>ハイブリッド方式</b></p>
+     <p>季節やシーンに合わせて除湿能力を細かく制御し、肌寒さを抑えながら除湿します。</p>
+    </div>
+   </div>
+   <div class="feature-caution">
+    <b>⚠ 新人が勘違いしやすいポイント</b><br>
+    リニアハイブリッド方式は、複数の除湿方式を切り替える方式で、一般社団法人 日本冷凍空調工業会による「再熱除湿方式」には該当しません。
    </div>`,
-  talk:"「ただ冷やして湿気を取るだけではなく、室温が下がりすぎないように運転方法を切り替えるので、梅雨や夜にも使いやすい除湿です。」",
-  caution:"除湿方式や再熱の使い方はシリーズ・型番で異なります。吹き出し温度が下がる場合もあります。"
+  talk:"「気温や湿度に合わせて除湿のしかたを細かく調整するので、ただ冷やして湿気を取る除湿より、肌寒さを抑えながら使いやすい機能です。」",
+  caution:"シリーズ・能力帯・型番で方式や搭載内容が異なります。除湿運転中に吹き出し温度が下がる場合もあるため、『室温が下がらない』『必ず寒くならない』とは案内しません。"
  }
 };
 
@@ -1318,11 +1335,11 @@ function showDaikinFeature(key){
 
 
 const VISUAL_LIBRARY=[
- {file:"premium-cooling.png",title:"プレミアム冷房",desc:"温度だけでなく湿度まで見る快適冷房を図解。"},
+ {file:"premium-cooling-v31a3.svg?v=3103",title:"プレミアム冷房",desc:"デシクル制御とPIT制御を、初心者向けに図解。"},
  {file:"no-direct-airflow.png",title:"風ないス運転",desc:"直接風と、体に当たりにくい気流を比較。"},
  {file:"swing-compressor.png",title:"スイングコンプレッサー",desc:"一般的な構造との違いと、一体構造の特徴を図解。"},
  {file:"streamer.png",title:"ストリーマ",desc:"放電技術を内部清潔や脱臭へ活用する仕組みを図解。"},
- {file:"sarara-dehumidify-reviewed.svg",title:"さらら除湿",desc:"R・Aはリニアハイブリッド方式、Fはハイブリッド方式。再熱除湿方式ではありません。"},
+ {file:"sarara-dehumidify-v31a3.svg?v=3103",title:"さらら除湿",desc:"さらら除湿の本質と、R・A・Fの方式の違いを図解。"},
  {file:"room-patrol.png",title:"室温パトロール",desc:"停止中の見守りから自動運転までの流れを図解。"},
  {file:"rafe-comparison.svg",title:"R・A・F・E比較",desc:"使い方・希望・予算から、4シリーズの提案軸を比較。"}
 ];

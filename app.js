@@ -213,4 +213,4 @@ document.getElementById("settingsButton").addEventListener("click",openSettings)
 document.getElementById("saveNameButton").addEventListener("click",saveName);
 
 updateHome();
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js?v=3103",{updateViaCache:"none"}).catch(()=>{}))}
