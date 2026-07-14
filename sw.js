@@ -1,17 +1,17 @@
-const CACHE='aircon-master-v31a3-3103';
+const CACHE='aircon-master-v31b-3104';
 const FILES=[
  './',
- './index.html?v=3103',
- './styles.css?v=3103',
- './data.js?v=3103',
- './app.js?v=3103',
+ './index.html?v=3104',
+ './styles.css?v=3104',
+ './data.js?v=3104',
+ './app.js?v=3104',
  './manifest.json',
  './hero-aircon.jpg',
  './icon-192.png',
  './icon-512.png',
  './apple-touch-icon.png',
- './premium-cooling-v31a3.svg?v=3103',
- './sarara-dehumidify-v31a3.svg?v=3103'
+ './premium-cooling-v31a3.svg?v=3104',
+ './sarara-dehumidify-v31a3.svg?v=3104'
 ];
 
 self.addEventListener('install',event=>{
