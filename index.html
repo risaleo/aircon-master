@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>エアコン販買マスター Pro Ver.3.6.6 学習記録強化版</title>
+<title>エアコン販買マスター Pro Ver.3.6.7 引き継ぎ機能追加版</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3500">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3500">
 <style>
@@ -374,7 +374,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
     <div class="brand">
       <span class="brand-snow">❄</span>
       <span>エアコン販買マスター</span>
-      <small>Ver.3.6.6 学習記録強化版</small>
+      <small>Ver.3.6.7 引き継ぎ機能追加版</small>
     </div>
     <button class="icon-button status-button" onclick="openMission()" aria-label="今日の目標">◎</button>
   </header>
@@ -769,7 +769,16 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
   </main>
 </section>
 
-<section id="settings" class="page hidden"><header class="subheader"><button onclick="show('home')">‹</button><h1>設定</h1><span></span></header><div class="settings-content"><label>あなたの名前</label><div class="settings-row"><input id="nameInput" maxlength="20"><button onclick="saveName()">保存</button></div></div></section>
+<section id="settings" class="page hidden"><header class="subheader"><button onclick="show('home')">‹</button><h1>設定</h1><span></span></header><div class="settings-content">
+<label>あなたの名前</label><div class="settings-row"><input id="nameInput" maxlength="20"><button onclick="saveName()">保存</button></div>
+<div style="margin-top:24px;padding-top:20px;border-top:1px solid #dbe6ef">
+<h3 style="margin:0 0 8px">学習記録の引き継ぎ</h3>
+<p style="margin:0 0 12px;color:#667085;font-size:13px;line-height:1.6">旧アイコンでコードを発行し、新しいアイコンで貼り付けると、名前・レベル・EXP・正解数・間違えた問題・学習履歴を移せます。</p>
+<button onclick="exportLearningData()" style="width:100%;margin-bottom:10px">引き継ぎコードを発行</button>
+<textarea id="transferCode" rows="7" placeholder="発行したコード、または旧アイコンでコピーしたコードをここに貼り付け" style="width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:12px;padding:10px;font-size:12px;line-height:1.45;resize:vertical"></textarea>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><button onclick="copyTransferCode()">コードをコピー</button><button onclick="importLearningData()">コードから復元</button></div>
+<p id="transferStatus" style="min-height:1.5em;margin:10px 0 0;color:#475467;font-size:12px"></p>
+</div></div></section>
 </div>
 
 <script>
@@ -1463,6 +1472,54 @@ function completeConstructionChecklist(){
  }else{
   alert("未確認が "+(CONSTRUCTION_CHECKS.length-checked)+" 項目あります。")
  }
+}
+
+
+function transferKeys(){
+ const keys=[];
+ for(let i=0;i<localStorage.length;i++){
+  const k=localStorage.key(i)||"";
+  if(/^aircon/i.test(k)||k==="constructionChecklistV42")keys.push(k);
+ }
+ return [...new Set(keys)].sort();
+}
+function utf8ToBase64(str){
+ const bytes=new TextEncoder().encode(str);let bin="";
+ bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin);
+}
+function base64ToUtf8(str){
+ const bin=atob(str);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes);
+}
+function exportLearningData(){
+ try{
+  const data={format:"aircon-master-transfer",version:1,createdAt:new Date().toISOString(),items:{}};
+  transferKeys().forEach(k=>data.items[k]=localStorage.getItem(k));
+  const code="AM1-"+utf8ToBase64(JSON.stringify(data));
+  const box=document.getElementById("transferCode");box.value=code;box.focus();box.select();
+  document.getElementById("transferStatus").textContent="引き継ぎコードを発行しました。コピーして新しいアイコンへ貼り付けてください。";
+ }catch(e){document.getElementById("transferStatus").textContent="コードを発行できませんでした。";console.error(e)}
+}
+async function copyTransferCode(){
+ const box=document.getElementById("transferCode");
+ if(!box.value.trim())return alert("先に引き継ぎコードを発行してください。");
+ try{await navigator.clipboard.writeText(box.value.trim());document.getElementById("transferStatus").textContent="コードをコピーしました。"}
+ catch(e){box.focus();box.select();document.execCommand("copy");document.getElementById("transferStatus").textContent="コードをコピーしました。"}
+}
+function importLearningData(){
+ const raw=(document.getElementById("transferCode").value||"").trim();
+ if(!raw)return alert("旧アイコンで発行したコードを貼り付けてください。");
+ if(!confirm("現在の学習記録を、引き継ぎコードの内容で復元します。よろしいですか？"))return;
+ try{
+  const body=raw.startsWith("AM1-")?raw.slice(4):raw;
+  const data=JSON.parse(base64ToUtf8(body));
+  if(!data||data.format!=="aircon-master-transfer"||!data.items||typeof data.items!=="object")throw new Error("invalid format");
+  let count=0;
+  Object.entries(data.items).forEach(([k,v])=>{
+   if((/^aircon/i.test(k)||k==="constructionChecklistV42")&&typeof v==="string"){localStorage.setItem(k,v);count++}
+  });
+  document.getElementById("transferStatus").textContent=count+"件の学習記録を復元しました。画面を更新します。";
+  setTimeout(()=>location.reload(),500);
+ }catch(e){alert("引き継ぎコードを読み取れませんでした。コード全体をコピーして、もう一度お試しください。");console.error(e)}
 }
 
 function openSettings(){document.getElementById("nameInput").value=localStorage.getItem(NAME)||"";show("settings")}
