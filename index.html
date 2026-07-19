@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>エアコン販買マスター Pro Ver.3.8 全問題再精査版</title>
+<title>エアコン販買マスター Pro Ver.3.8.1 全問題再精査版</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3500">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3500">
 <style>
@@ -374,7 +374,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
     <div class="brand">
       <span class="brand-snow">❄</span>
       <span>エアコン販買マスター</span>
-      <small>Ver.3.8 全問題再精査版</small>
+      <small>Ver.3.8.1 全問題再精査版</small>
     </div>
     <button class="icon-button status-button" onclick="openMission()" aria-label="今日の目標">◎</button>
   </header>
@@ -853,7 +853,7 @@ function awardExp(amount){
  localStorage.setItem(LIFETIME_EXP_KEY,String(next));
  return next;
 }
-function missionKey(){return"aircon_v2130_mission_"+new Date().toISOString().slice(0,10)}
+function missionKey(){return "aircon_v2130_mission_"+localDateKey()}
 function dailyMission(){
  const day=new Date().getDate()%3;
  if(day===0)return{type:"sales",goal:3,title:"販買モードを3件実施する"};
@@ -1479,7 +1479,7 @@ function transferKeys(){
  const keys=[];
  for(let i=0;i<localStorage.length;i++){
   const k=localStorage.key(i)||"";
-  if(/^aircon/i.test(k)||k==="constructionChecklistV42")keys.push(k);
+  if((/^aircon/i.test(k)||k==="constructionChecklistV42")&&!/^aircon_v2130_mission_/i.test(k))keys.push(k);
  }
  return [...new Set(keys)].sort();
 }
@@ -1515,12 +1515,25 @@ function importLearningData(){
   if(!data||data.format!=="aircon-master-transfer"||!data.items||typeof data.items!=="object")throw new Error("invalid format");
   let count=0;
   Object.entries(data.items).forEach(([k,v])=>{
-   if((/^aircon/i.test(k)||k==="constructionChecklistV42")&&typeof v==="string"){localStorage.setItem(k,v);count++}
+   if((/^aircon/i.test(k)||k==="constructionChecklistV42")&&!/^aircon_v2130_mission_/i.test(k)&&typeof v==="string"){localStorage.setItem(k,v);count++}
   });
   document.getElementById("transferStatus").textContent=count+"件の学習記録を復元しました。画面を更新します。";
   setTimeout(()=>location.reload(),500);
  }catch(e){alert("引き継ぎコードを読み取れませんでした。コード全体をコピーして、もう一度お試しください。");console.error(e)}
 }
+
+// 引き継ぎコードに含まれていた旧ミッション進捗を一度だけ削除する
+(function resetImportedMissionProgressOnce(){
+ const flag="aircon_mission_import_fix_v381";
+ if(localStorage.getItem(flag))return;
+ const remove=[];
+ for(let i=0;i<localStorage.length;i++){
+  const k=localStorage.key(i)||"";
+  if(/^aircon_v2130_mission_/i.test(k))remove.push(k);
+ }
+ remove.forEach(k=>localStorage.removeItem(k));
+ localStorage.setItem(flag,"1");
+})();
 
 function openSettings(){document.getElementById("nameInput").value=localStorage.getItem(NAME)||"";show("settings")}
 function saveName(){const v=document.getElementById("nameInput").value.trim();if(!v)return alert("あなたのお名前を入力してください。");localStorage.setItem(NAME,v);alert(v+"さんで保存しました。");updateHome()}
