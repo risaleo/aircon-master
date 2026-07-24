@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>エアコン販買マスター Pro Ver.3.8.8 今日のEXP修正版</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3880">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3880">
+<title>エアコン販買マスター Pro Ver.3.8.9 ランク名修正版</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3890">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3890">
 <style>
 :root{--navy:#0b315f;--blue:#116fe8;--text:#14324f;--muted:#718497;--line:#dbe6ef}
 *{box-sizing:border-box}
@@ -372,7 +372,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 }
 
 </style>
-<link rel="manifest" href="manifest.webmanifest?v=3880">
+<link rel="manifest" href="manifest.webmanifest?v=3890">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="エアコン販買マスター">
@@ -386,7 +386,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
     <div class="brand">
       <span class="brand-snow">❄</span>
       <span>エアコン販買マスター</span>
-      <small>Ver.3.8.8 今日のEXP修正版</small>
+      <small>Ver.3.8.9 ランク名修正版</small>
     </div>
     <button class="icon-button status-button" onclick="openMission()" aria-label="今日の目標">◎</button>
   </header>
@@ -438,7 +438,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 
     <section class="primary-actions">
       <button class="primary-card sales-primary" onclick="startSales()">
-        <span class="primary-illustration momo-illustration"><img src="momo-chan.png?v=3880" alt="ももちゃん"></span>
+        <span class="primary-illustration momo-illustration"><img src="momo-chan.png?v=3890" alt="ももちゃん"></span>
         <span class="primary-copy">
           <b>販買モード</b>
           <small>お客様へのご提案や<br>製品・機能の確認に</small>
@@ -941,7 +941,8 @@ function updateHome(){
  const todayProgress=Math.min(todayExp,100);
  const name=(localStorage.getItem(NAME)||"").trim();
  const displayName=name?name+"さん":"スタッフさん";
- const rank=lv>=10?"エアコンアドバイザー":lv>=5?"接客担当":"新人スタッフ";
+ const rank=lv>=60?"エアコン販買マスター":lv>=50?"エアコンマスター":lv>=40?"エアコンコンサルタント":lv>=30?"エアコンアドバイザー":lv>=20?"エアコン担当":lv>=10?"接客スタッフ":"新人スタッフ";
+ const nextRankLevel=lv<10?10:lv<20?20:lv<30?30:lv<40?40:lv<50?50:lv<60?60:null;
 
  const profileName=document.getElementById("profileName");
  if(profileName)profileName.textContent=displayName;
@@ -958,7 +959,9 @@ function updateHome(){
  const totalExp=document.getElementById("totalExp");
  if(totalExp)totalExp.textContent=exp.toLocaleString("ja-JP")+" EXP";
  const nextExp=document.getElementById("nextExp");
- if(nextExp)nextExp.textContent="ランクアップまで "+(100-within)+"EXP";
+ if(nextExp){
+  nextExp.textContent=nextRankLevel===null?"最高ランク達成":"ランクアップまで "+Math.max(0,(nextRankLevel-1)*100-exp)+"EXP";
+ }
 
  const segments=[...document.querySelectorAll(".segmented-progress i")];
  const filled=Math.round(todayProgress/10);
@@ -1453,11 +1456,11 @@ function showDaikinFeature(key){
 
 
 const VISUAL_LIBRARY=[
- {file:"premium-cooling.png?v=3880",title:"プレミアム冷房",desc:"デシクル制御とPIT制御を、初心者向けに図解。"},
+ {file:"premium-cooling.png?v=3890",title:"プレミアム冷房",desc:"デシクル制御とPIT制御を、初心者向けに図解。"},
  {file:"no-direct-airflow.png",title:"風ないス運転",desc:"直接風と、体に当たりにくい気流を比較。"},
  {file:"swing-compressor.png",title:"スイングコンプレッサー",desc:"一般的な構造との違いと、一体構造の特徴を図解。"},
  {file:"streamer.png",title:"ストリーマ",desc:"放電技術を内部清潔や脱臭へ活用する仕組みを図解。"},
- {file:"sarara-dehumidify.png?v=3880",title:"さらら除湿",desc:"さらら除湿の本質と、R・A・Fの方式の違いを図解。"},
+ {file:"sarara-dehumidify.png?v=3890",title:"さらら除湿",desc:"さらら除湿の本質と、R・A・Fの方式の違いを図解。"},
  {file:"room-patrol.png",title:"室温パトロール",desc:"停止中の見守りから自動運転までの流れを図解。"},
  {file:"daikin-overview.png",title:"R・A・F・E比較",desc:"使い方・希望・予算から、4シリーズの提案軸を比較。"}
 ];
