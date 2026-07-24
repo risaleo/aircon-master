@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>エアコン販買マスター Pro Ver.3.8.7 ももちゃん追加版</title>
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3870">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3870">
+<title>エアコン販買マスター Pro Ver.3.8.8 今日のEXP修正版</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3880">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3880">
 <style>
 :root{--navy:#0b315f;--blue:#116fe8;--text:#14324f;--muted:#718497;--line:#dbe6ef}
 *{box-sizing:border-box}
@@ -372,7 +372,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 }
 
 </style>
-<link rel="manifest" href="manifest.webmanifest?v=3870">
+<link rel="manifest" href="manifest.webmanifest?v=3880">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="エアコン販買マスター">
@@ -386,7 +386,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
     <div class="brand">
       <span class="brand-snow">❄</span>
       <span>エアコン販買マスター</span>
-      <small>Ver.3.8.7 ももちゃん追加版</small>
+      <small>Ver.3.8.8 今日のEXP修正版</small>
     </div>
     <button class="icon-button status-button" onclick="openMission()" aria-label="今日の目標">◎</button>
   </header>
@@ -438,7 +438,7 @@ button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 
     <section class="primary-actions">
       <button class="primary-card sales-primary" onclick="startSales()">
-        <span class="primary-illustration momo-illustration"><img src="momo-chan.png?v=3870" alt="ももちゃん"></span>
+        <span class="primary-illustration momo-illustration"><img src="momo-chan.png?v=3880" alt="ももちゃん"></span>
         <span class="primary-copy">
           <b>販買モード</b>
           <small>お客様へのご提案や<br>製品・機能の確認に</small>
@@ -888,8 +888,10 @@ function lifetimeExp(){
  return n;
 }
 function awardExp(amount){
- const next=lifetimeExp()+Math.max(0,Number(amount)||0);
+ const earned=Math.max(0,Number(amount)||0);
+ const next=lifetimeExp()+earned;
  localStorage.setItem(LIFETIME_EXP_KEY,String(next));
+ addDailyExp(earned);
  return next;
 }
 function missionKey(){return"aircon_v2130_mission_"+new Date().toISOString().slice(0,10)}
@@ -902,13 +904,7 @@ function dailyMission(){
 function missionCount(){const m=dailyMission();return Number(localStorage.getItem(missionKey()+"_"+m.type)||0)}
 function addMission(type,amount=1){const m=dailyMission();if(m.type!==type)return;localStorage.setItem(missionKey()+"_"+m.type,String(missionCount()+amount))}
 
-const DAILY_EXP_KEY="aircon_master_daily_exp_v211";
-(function migrateDailyExp(){
- if(localStorage.getItem(DAILY_EXP_KEY)===null && localStorage.getItem("aircon_master_daily_exp")!==null){
-  localStorage.setItem(DAILY_EXP_KEY,localStorage.getItem("aircon_master_daily_exp"));
- }
-})();
-
+const DAILY_EXP_KEY="aircon_master_daily_exp_v388";
 function localDateKey(date=new Date()){
  return date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0")+"-"+String(date.getDate()).padStart(2,"0");
 }
@@ -917,32 +913,20 @@ function readDailyExp(){
   const saved=JSON.parse(localStorage.getItem(DAILY_EXP_KEY)||"{}");
   const today=localDateKey();
   if(saved.date!==today){
-   const reset={date:today,exp:0,lastTotalExp:null};
+   const reset={date:today,exp:0};
    localStorage.setItem(DAILY_EXP_KEY,JSON.stringify(reset));
    return reset;
   }
-  return {
-   date:today,
-   exp:Math.max(0,Number(saved.exp)||0),
-   lastTotalExp:saved.lastTotalExp===null||saved.lastTotalExp===undefined?null:Number(saved.lastTotalExp)
-  };
+  return {date:today,exp:Math.max(0,Number(saved.exp)||0)};
  }catch(e){
-  const reset={date:localDateKey(),exp:0,lastTotalExp:null};
+  const reset={date:localDateKey(),exp:0};
   localStorage.setItem(DAILY_EXP_KEY,JSON.stringify(reset));
   return reset;
  }
 }
-function syncDailyExp(totalExp){
+function addDailyExp(amount){
  const daily=readDailyExp();
- if(daily.lastTotalExp===null){
-  daily.lastTotalExp=totalExp;
- }else if(totalExp>daily.lastTotalExp){
-  daily.exp+=totalExp-daily.lastTotalExp;
-  daily.lastTotalExp=totalExp;
- }else if(totalExp<daily.lastTotalExp){
-  // 学習履歴の初期化・削除時は、今日の進捗を増減させず基準値だけ合わせる
-  daily.lastTotalExp=totalExp;
- }
+ daily.exp+=Math.max(0,Number(amount)||0);
  localStorage.setItem(DAILY_EXP_KEY,JSON.stringify(daily));
  return daily.exp;
 }
@@ -953,7 +937,7 @@ function updateHome(){
  const exp=Math.max(safeNonNegativeNumber(calculatedExp),safeNonNegativeNumber(lifetimeExp()));
  const lv=Math.max(1,Math.floor(exp/100)+1);
  const within=exp%100;
- const todayExp=syncDailyExp(exp);
+ const todayExp=readDailyExp().exp;
  const todayProgress=Math.min(todayExp,100);
  const name=(localStorage.getItem(NAME)||"").trim();
  const displayName=name?name+"さん":"スタッフさん";
@@ -1469,11 +1453,11 @@ function showDaikinFeature(key){
 
 
 const VISUAL_LIBRARY=[
- {file:"premium-cooling.png?v=3870",title:"プレミアム冷房",desc:"デシクル制御とPIT制御を、初心者向けに図解。"},
+ {file:"premium-cooling.png?v=3880",title:"プレミアム冷房",desc:"デシクル制御とPIT制御を、初心者向けに図解。"},
  {file:"no-direct-airflow.png",title:"風ないス運転",desc:"直接風と、体に当たりにくい気流を比較。"},
  {file:"swing-compressor.png",title:"スイングコンプレッサー",desc:"一般的な構造との違いと、一体構造の特徴を図解。"},
  {file:"streamer.png",title:"ストリーマ",desc:"放電技術を内部清潔や脱臭へ活用する仕組みを図解。"},
- {file:"sarara-dehumidify.png?v=3870",title:"さらら除湿",desc:"さらら除湿の本質と、R・A・Fの方式の違いを図解。"},
+ {file:"sarara-dehumidify.png?v=3880",title:"さらら除湿",desc:"さらら除湿の本質と、R・A・Fの方式の違いを図解。"},
  {file:"room-patrol.png",title:"室温パトロール",desc:"停止中の見守りから自動運転までの流れを図解。"},
  {file:"daikin-overview.png",title:"R・A・F・E比較",desc:"使い方・希望・予算から、4シリーズの提案軸を比較。"}
 ];
